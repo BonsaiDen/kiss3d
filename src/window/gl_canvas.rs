@@ -3,7 +3,7 @@ use std::sync::mpsc::Sender;
 use event::{Action, Key, Modifiers, MouseButton, WindowEvent};
 use gl;
 use glutin::{
-    self, dpi::LogicalSize, ContextBuilder, EventsLoop, GlContext, GlRequest, GlWindow,
+    self, dpi::{PhysicalPosition, LogicalSize}, ContextBuilder, EventsLoop, GlContext, GlRequest, GlWindow,
     WindowBuilder,
 };
 use window::AbstractCanvas;
@@ -180,6 +180,16 @@ impl AbstractCanvas for GLCanvas {
 
     fn set_cursor_grab(&self, grab: bool) {
         let _ = self.window.window().grab_cursor(grab);
+    }
+
+    fn set_cursor_pos(&self, pos: (f64, f64)) {
+        let position = PhysicalPosition::new(pos.0, pos.1);
+        let dpi_factor = self.window.get_hidpi_factor();
+        let _ = self.window.window().set_cursor_position(position.to_logical(dpi_factor));
+    }
+
+    fn set_cursor_visible(&self, visible: bool) {
+        self.window.window().hide_cursor(!visible);
     }
 
     fn hide(&mut self) {

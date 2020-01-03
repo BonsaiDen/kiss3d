@@ -114,6 +114,16 @@ impl Canvas {
         self.canvas.set_cursor_grab(grab);
     }
 
+    /// Set the position of the cursor.
+    pub fn set_cursor_pos(&self, pos: (f64, f64)) {
+        self.canvas.set_cursor_pos(pos);
+    }
+
+    /// Set the cursor visibility.
+    pub fn set_cursor_visible(&self, visible: bool) {
+        self.canvas.set_cursor_visible(visible);
+    }
+
     /// Hide the window.
     pub fn hide(&mut self) {
         self.canvas.hide()
@@ -154,6 +164,8 @@ pub(crate) trait AbstractCanvas {
     fn set_title(&mut self, title: &str);
     fn set_icon(&mut self, icon: impl GenericImage<Pixel = impl Pixel<Subpixel = u8>>);
     fn set_cursor_grab(&self, grab: bool);
+    fn set_cursor_pos(&self, pos: (f64, f64));
+    fn set_cursor_visible(&self, visible: bool);
     fn hide(&mut self);
     fn show(&mut self);
 

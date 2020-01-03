@@ -8,7 +8,7 @@ use std::sync::mpsc::Sender;
 use event::{Action, Key, Modifiers, MouseButton, WindowEvent};
 use stdweb::web::event as webevent;
 use stdweb::web::event::{ConcreteEvent, IEvent, IKeyboardEvent, IMouseEvent, IUiEvent};
-use stdweb::web::{self, html_element::CanvasElement, IEventTarget, IHtmlElement, IParentNode};
+use stdweb::web::{self, html_element::CanvasElement, IEventTarget, IHtmlElement, IParentNode, IElement};
 use stdweb::{unstable::TryInto, Reference};
 use window::{AbstractCanvas, CanvasSetup};
 use image::{GenericImage, Pixel};
@@ -203,6 +203,18 @@ impl AbstractCanvas for WebGLCanvas {
 
     fn set_cursor_grab(&self, grab: bool) {
         // Not supported.
+    }
+
+    fn set_cursor_pos(&self, pos: (f64, f64)) {
+        // Not supported.
+    }
+
+    fn set_cursor_visible(&self, visible: bool) {
+        let cursor_style = match visible {
+            true => "",
+            false => "cursor: none"
+        };
+        self.data.borrow().canvas.set_attribute("style", cursor_style);
     }
 
     fn hide(&mut self) {

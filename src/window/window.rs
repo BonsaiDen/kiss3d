@@ -151,6 +151,18 @@ impl Window {
         self.canvas.set_cursor_grab(grab);
     }
 
+    /// Set the cursor position.
+    ///
+    /// Does nothing on web platforms.
+    pub fn set_cursor_pos(&self, position: Point2<u32>) {
+        self.canvas.set_cursor_pos((position.x as f64, position.y as f64));
+    }
+
+    /// Set the cursor visibility.
+    pub fn set_cursor_visible(&self, visible: bool) {
+        self.canvas.set_cursor_visible(visible);
+    }
+
     /// Closes the window.
     #[inline]
     pub fn close(&mut self) {
